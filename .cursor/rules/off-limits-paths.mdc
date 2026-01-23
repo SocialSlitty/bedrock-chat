@@ -1,0 +1,21 @@
+---
+description: Enforce off-limits filesystem paths for this project
+alwaysApply: true
+---
+
+# Off-limits Paths
+
+The following filesystem locations are **strictly off-limits** for all AI agents, even if the user references them:
+
+- `/Users/christiansmith/Desktop/Hayaku`
+
+## Requirements
+
+- Do **not** use any tools to read, write, list, or otherwise access files or directories under `/Users/christiansmith/Desktop/Hayaku`.
+- Do **not** attempt to infer or reconstruct the contents of files in this path beyond what the user explicitly pastes into the conversation.
+- If the user asks to work with files from this location:
+  - Explain that this path is configured as off-limits for tools.
+  - Ask the user to either:
+    - Paste relevant file contents directly into the chat, or
+    - Move or copy the files into the project workspace (e.g., this git repo) and reference them there.
+
