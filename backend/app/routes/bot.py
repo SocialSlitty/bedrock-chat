@@ -43,7 +43,7 @@ def post_bot(
     request: Request,
     bot_input: BotInput,
     create_bot_check=Depends(check_creating_bot_allowed),
-):
+) -> BotOutput:
     """Create new private owned bot."""
     current_user: User = request.state.current_user
 

@@ -333,7 +333,7 @@ const useChat = () => {
   const pushNewMessage = (
     parentMessageId: string | null,
     messageContent: MessageContent
-  ) => {
+  ): void => {
     pushMessage(
       conversationId ?? '',
       parentMessageId,
@@ -366,7 +366,7 @@ const useChat = () => {
     base64EncodedImages?: string[];
     attachments?: AttachmentType[];
     bot?: BotInputType;
-  }) => {
+  }): void => {
     const { content, bot, base64EncodedImages, attachments } = params;
     const isNewChat = conversationId ? false : true;
     const newConversationId = ulid();
@@ -511,7 +511,7 @@ const useChat = () => {
   const continueGenerate = (params?: {
     messageId?: string;
     bot?: BotInputType;
-  }) => {
+  }): void => {
     setPostingMessage(true);
 
     const messageContent: MessageContent = {
@@ -568,7 +568,7 @@ const useChat = () => {
     content?: string;
     messageId?: string;
     bot?: BotInputType;
-  }) => {
+  }): void => {
     let index: number = -1;
     // messageIdが指定されている場合は、指定されたメッセージをベースにする
     if (props?.messageId) {

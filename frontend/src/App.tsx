@@ -23,8 +23,7 @@ const App: React.FC = () => {
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
-    // set header title
-    document.title = t('app.name')
+    document.title = t('app.name');
   }, [t]);
 
   Amplify.configure({

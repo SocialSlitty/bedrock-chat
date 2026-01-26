@@ -24,9 +24,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPAuthorizationCredentials
 from pydantic import ValidationError
-from starlette.requests import Request
 from starlette.responses import Response
-from starlette.types import ASGIApp, Message
+from starlette.types import ASGIApp
 
 
 CORS_ALLOW_ORIGINS = os.environ.get("CORS_ALLOW_ORIGINS", "*")
@@ -102,7 +101,7 @@ app.add_exception_handler(Exception, error_handler_factory(500))
 
 
 @app.middleware("http")
-def add_current_user_to_request(request: Request, call_next: ASGIApp):
+async def add_current_user_to_request(request: Request, call_next: ASGIApp) -> Response:
     if is_running_on_lambda():
         if not is_published_api:
             authorization = request.headers.get("Authorization")
@@ -126,12 +125,12 @@ def add_current_user_to_request(request: Request, call_next: ASGIApp):
                 id="test_user", name="test_user", email="user@example.com", groups=[]
             )
 
-    response = call_next(request)  # type: ignore
+    response = await call_next(request)  # type: ignore
     return response
 
 
 @app.middleware("http")
-async def add_log_requests(request: Request, call_next: ASGIApp):
+async def add_log_requests(request: Request, call_next: ASGIApp) -> Response:
     logger.info(f"Request path: {request.url.path}")
     logger.info(f"Request method: {request.method}")
     logger.info(f"Request headers: {request.headers}")
